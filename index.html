@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MahaSetu - Unified Government Services Portal">
+    <title>MahaSetu | Unified Government Services</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to Main Content</a>
+
+    <div class="topbar">
+        <div class="container topbar-inner">
+            <span>Government of Maharashtra</span>
+            <div class="top-actions">
+                <button type="button" class="text-btn" onclick="focusMain()">Screen Reader</button>
+                <button type="button" class="text-btn" onclick="changeFont(-1)">A-</button>
+                <button type="button" class="text-btn" onclick="resetFont()">A</button>
+                <button type="button" class="text-btn" onclick="changeFont(1)">A+</button>
+                <label class="sr-only" for="languageSelect">Language</label>
+                <select id="languageSelect" onchange="changeLanguage()">
+                    <option value="en">English</option>
+                    <option value="mr">मराठी</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="container header-inner">
+            <a class="brand" href="#home" aria-label="MahaSetu Home">
+                <span class="brand-icon">🏛️</span>
+                <span>
+                    <strong>MahaSetu</strong>
+                    <small>Unified Government Services</small>
+                </span>
+            </a>
+            <div class="header-actions">
+                <span id="sessionUser" class="session-user" hidden></span>
+                <button id="authButton" type="button" class="btn btn-primary" onclick="handleAuthAction()">Login / Register</button>
+                <button id="helpButton" type="button" class="btn btn-outline" onclick="showHelp()">Help</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="navbar" aria-label="Main navigation">
+        <div class="container nav-inner">
+            <button type="button" class="menu-toggle" onclick="toggleMenu()" aria-label="Open menu" aria-controls="navMenu" aria-expanded="false">☰</button>
+            <div id="navMenu" class="nav-menu">
+                <a href="#home">Home</a>
+                <a href="#services">Services</a>
+                <a href="#departments">Departments</a>
+                <a href="#track">Track Application</a>
+                <a href="#notices">Notices</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <section id="home" class="hero">
+            <div class="container hero-content">
+                <span class="eyebrow">Digital Maharashtra</span>
+                <h1>Government Services, Simplified.</h1>
+                <p>Access important citizen services, submit applications, and track your application status from one place.</p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="#services">Explore Services</a>
+                    <a class="btn btn-light" href="#track">Track Application</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="search-section" aria-label="Search services">
+            <div class="container">
+                <form class="search-box" onsubmit="event.preventDefault(); searchServices();">
+                    <label class="sr-only" for="serviceSearch">Search services</label>
+                    <input id="serviceSearch" type="search" placeholder="Search for a service..." autocomplete="off">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="services" class="section">
+            <div class="container">
+                <div class="section-heading">
+                    <div>
+                        <span class="eyebrow">Citizen Services</span>
+                        <h2>Popular Services</h2>
+                    </div>
+                    <button type="button" class="btn btn-outline" onclick="showAllServices()">View All Services</button>
+                </div>
+                <div id="servicesGrid" class="service-grid">
+                    <article class="service-card" data-name="income certificate revenue" data-service-id="1">
+                        <div class="service-icon">📄</div>
+                        <h3>Income Certificate</h3>
+                        <p>Apply for an official income certificate.</p>
+                        <button type="button" class="service-link" onclick="applyService(1, 'Income Certificate')">Apply Now →</button>
+                    </article>
+                    <article class="service-card" data-name="domicile certificate revenue" data-service-id="2">
+                        <div class="service-icon">🏠</div>
+                        <h3>Domicile Certificate</h3>
+                        <p>Apply for proof of domicile/residence.</p>
+                        <button type="button" class="service-link" onclick="applyService(2, 'Domicile Certificate')">Apply Now →</button>
+                    </article>
+                    <article class="service-card" data-name="caste certificate revenue" data-service-id="3">
+                        <div class="service-icon">📑</div>
+                        <h3>Caste Certificate</h3>
+                        <p>Submit a request for a caste certificate.</p>
+                        <button type="button" class="service-link" onclick="applyService(3, 'Caste Certificate')">Apply Now →</button>
+                    </article>
+                    <article class="service-card" data-name="birth certificate municipal health" data-service-id="4">
+                        <div class="service-icon">👶</div>
+                        <h3>Birth Certificate</h3>
+                        <p>Request a birth certificate service.</p>
+                        <button type="button" class="service-link" onclick="applyService(4, 'Birth Certificate')">Apply Now →</button>
+                    </article>
+                    <article class="service-card" data-name="scholarship services education" data-service-id="5">
+                        <div class="service-icon">🎓</div>
+                        <h3>Scholarship Services</h3>
+                        <p>Explore and apply for scholarship services.</p>
+                        <button type="button" class="service-link" onclick="applyService(5, 'Scholarship Services')">Apply Now →</button>
+                    </article>
+                    <article class="service-card" data-name="transport services driving licence transport" data-service-id="6">
+                        <div class="service-icon">🚗</div>
+                        <h3>Transport Services</h3>
+                        <p>Access selected transport-related services.</p>
+                        <button type="button" class="service-link" onclick="applyService(6, 'Transport Services')">Apply Now →</button>
+                    </article>
+                </div>
+                <p id="noServices" class="empty-state" hidden>No matching service found.</p>
+            </div>
+        </section>
+
+        <section id="departments" class="section section-muted">
+            <div class="container">
+                <div class="section-heading">
+                    <div>
+                        <span class="eyebrow">Government Departments</span>
+                        <h2>Find Services by Department</h2>
+                    </div>
+                </div>
+                <div class="department-grid">
+                    <button type="button" class="department-card" onclick="filterDepartment('Revenue')">
+                        <span>🏢</span><strong>Revenue</strong><small>Certificates and citizen records</small>
+                    </button>
+                    <button type="button" class="department-card" onclick="filterDepartment('Transport')">
+                        <span>🚘</span><strong>Transport</strong><small>Transport-related services</small>
+                    </button>
+                    <button type="button" class="department-card" onclick="filterDepartment('Education')">
+                        <span>📚</span><strong>Education</strong><small>Scholarships and education services</small>
+                    </button>
+                    <button type="button" class="department-card" onclick="filterDepartment('Health')">
+                        <span>🏥</span><strong>Health</strong><small>Health and municipal services</small>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="track" class="section">
+            <div class="container narrow">
+                <div class="section-heading centered">
+                    <div>
+                        <span class="eyebrow">Application Tracking</span>
+                        <h2>Track Your Application</h2>
+                        <p>Enter your application ID to view the latest status.</p>
+                    </div>
+                </div>
+                <form class="track-form" onsubmit="event.preventDefault(); trackApplication();">
+                    <label class="sr-only" for="applicationId">Application ID</label>
+                    <input id="applicationId" type="text" placeholder="Example: MH-REV-2026-123456" autocomplete="off">
+                    <button class="btn btn-primary" type="submit">Track</button>
+                </form>
+                <div id="trackingResult" class="tracking-result" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <section class="section section-muted">
+            <div class="container">
+                <div class="feature-grid">
+                    <div class="feature"><span>🔐</span><h3>Secure Access</h3><p>Session-based authentication with protected application submission.</p></div>
+                    <div class="feature"><span>📱</span><h3>Citizen Friendly</h3><p>Responsive layout for desktop, tablet and mobile devices.</p></div>
+                    <div class="feature"><span>🔎</span><h3>Easy Tracking</h3><p>Track submitted applications using a unique application ID.</p></div>
+                    <div class="feature"><span>♿</span><h3>Accessible</h3><p>Keyboard-friendly controls, focus states and readable contrast.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="notices" class="section">
+            <div class="container">
+                <div class="section-heading">
+                    <div><span class="eyebrow">Updates</span><h2>Notices</h2></div>
+                </div>
+                <div class="notice-list">
+                    <div class="notice"><span class="notice-date">2026</span><div><strong>Citizen service portal</strong><p>Use this local prototype to test registration, login, service applications and tracking.</p></div></div>
+                    <div class="notice"><span class="notice-date">INFO</span><div><strong>Prototype notice</strong><p>This project is a demonstration and is not connected to live Maharashtra Government systems.</p></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section section-muted">
+            <div class="container narrow">
+                <div class="section-heading centered"><div><span class="eyebrow">About</span><h2>About MahaSetu</h2></div></div>
+                <p class="about-text">MahaSetu is a local demonstration portal for bringing common government-service workflows into a single citizen-friendly interface. The included PHP/MySQL backend is designed for XAMPP development and testing.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact" class="footer">
+        <div class="container footer-grid">
+            <div><h3>MahaSetu</h3><p>Unified Government Services Portal</p></div>
+            <div><h4>Quick Links</h4><a href="#services">Services</a><a href="#track">Track Application</a><a href="#notices">Notices</a></div>
+            <div><h4>Citizen Support</h4><button type="button" class="footer-link" onclick="showHelp()">Help Centre</button><button type="button" class="footer-link" onclick="openLogin()">Login / Register</button></div>
+        </div>
+        <div class="footer-bottom">© 2026 MahaSetu Demo Portal. For local development/testing only.</div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" aria-hidden="true">
+        <div class="modal-card">
+            <button type="button" class="modal-close" onclick="closeLogin()" aria-label="Close">×</button>
+            <h2 id="loginTitle">Login</h2>
+            <p class="modal-subtitle">Use your registered mobile number or email.</p>
+            <form id="loginForm" onsubmit="loginUser(event)">
+                <label for="loginUser">Mobile / Email</label>
+                <input id="loginUser" type="text" required autocomplete="username">
+                <label for="loginPassword">Password</label>
+                <input id="loginPassword" type="password" required autocomplete="current-password">
+                <div class="captcha-row">
+                    <span id="captchaText" class="captcha" aria-label="CAPTCHA"></span>
+                    <button type="button" class="btn btn-outline btn-small" onclick="generateCaptcha()">Refresh</button>
+                </div>
+                <label for="captchaInput">Enter CAPTCHA</label>
+                <input id="captchaInput" type="text" required autocomplete="off">
+                <button class="btn btn-primary btn-full" type="submit">Login</button>
+            </form>
+            <p class="switch-text">New citizen? <button type="button" class="inline-btn" onclick="openRegister()">Create an account</button></p>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="registerTitle" aria-hidden="true">
+        <div class="modal-card">
+            <button type="button" class="modal-close" onclick="closeRegister()" aria-label="Close">×</button>
+            <h2 id="registerTitle">Create Account</h2>
+            <p class="modal-subtitle">Register for this local MahaSetu demo.</p>
+            <form id="registerForm" onsubmit="registerUser(event)">
+                <label for="registerName">Full Name</label>
+                <input id="registerName" type="text" required autocomplete="name">
+                <label for="registerMobile">Mobile Number</label>
+                <input id="registerMobile" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required autocomplete="tel">
+                <label for="registerEmail">Email (optional)</label>
+                <input id="registerEmail" type="email" autocomplete="email">
+                <label for="registerPassword">Password</label>
+                <input id="registerPassword" type="password" minlength="6" required autocomplete="new-password">
+                <label for="registerPasswordConfirm">Confirm Password</label>
+                <input id="registerPasswordConfirm" type="password" minlength="6" required autocomplete="new-password">
+                <button class="btn btn-primary btn-full" type="submit">Register</button>
+            </form>
+            <p class="switch-text">Already registered? <button type="button" class="inline-btn" onclick="openLogin()">Login</button></p>
+        </div>
+    </div>
+
+    <!-- Application Modal -->
+    <div id="applicationModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="applicationTitle" aria-hidden="true">
+        <div class="modal-card modal-wide">
+            <button type="button" class="modal-close" onclick="closeApplication()" aria-label="Close">×</button>
+            <h2 id="applicationTitle">Service Application</h2>
+            <p id="selectedServiceLabel" class="modal-subtitle"></p>
+            <form id="applicationForm" onsubmit="submitApplication(event)">
+                <input id="applicationServiceId" type="hidden">
+                <label for="applicantName">Applicant Name</label>
+                <input id="applicantName" type="text" required autocomplete="name">
+                <div class="form-grid">
+                    <div><label for="applicantMobile">Mobile Number</label><input id="applicantMobile" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required autocomplete="tel"></div>
+                    <div><label for="applicantEmail">Email (optional)</label><input id="applicantEmail" type="email" autocomplete="email"></div>
+                </div>
+                <label for="applicationDetails">Application Details</label>
+                <textarea id="applicationDetails" rows="5" placeholder="Enter relevant details..."></textarea>
+                <button class="btn btn-primary btn-full" type="submit">Submit Application</button>
+            </form>
+            <div id="applicationSuccess" class="success-box" hidden></div>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle" aria-hidden="true">
+        <div class="modal-card">
+            <button type="button" class="modal-close" onclick="closeHelp()" aria-label="Close">×</button>
+            <h2 id="helpTitle">Help & Support</h2>
+            <p>For this local prototype, use the registration and login flow to test service applications.</p>
+            <div class="help-box"><strong>Technical setup</strong><br>Start Apache and MySQL in XAMPP, import the included SQL file, then open the project through localhost.</div>
+            <div class="help-box"><strong>Important</strong><br>This demo does not connect to real government databases or services.</div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite">
+        <span id="toastMessage"></span>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
